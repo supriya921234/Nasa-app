@@ -1,0 +1,37 @@
+.wishlist-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+.wishlist-item {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.apod-image {
+  max-width: 100%;
+  height: auto;
+}
+.apod-video {
+  width: 100%;
+  min-height: 400px;
+}
+.date {
+  color: #666;
+  font-style: italic;
+}
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.empty-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}

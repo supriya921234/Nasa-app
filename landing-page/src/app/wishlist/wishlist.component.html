@@ -1,0 +1,34 @@
+<div class="wishlist-container">
+  <h2>Your Saved APODs</h2>
+  
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="wishlistItems.length > 0; else emptyState">
+      <div *ngFor="let item of wishlistItems" class="wishlist-item">
+        <h3>{{ item.title }}</h3>
+        <p class="date">{{ item.date | date }}</p>
+        
+        <div *ngIf="item.media_type === 'image'">
+          <img [src]="item.url" [alt]="item.title" class="apod-image">
+        </div>
+        <div *ngIf="item.media_type === 'video'">
+          <iframe 
+            [src]="item.url | safeUrl" 
+            frameborder="0" 
+            allowfullscreen
+            class="apod-video">
+          </iframe>
+        </div>
+
+        <button (click)="removeFromWishlist(item.date)" class="remove-btn">
+          Remove
+        </button>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <p class="empty-message">Your wishlist is empty</p>
+    </ng-template>
+  </div>
+</div>
