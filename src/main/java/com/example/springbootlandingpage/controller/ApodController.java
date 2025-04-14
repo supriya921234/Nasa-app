@@ -1,6 +1,7 @@
 package com.example.springbootlandingpage.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +17,14 @@ public class ApodController {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/api/apod")
-    public ResponseEntity<String> getApod(@RequestParam String date) {
-        String url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey + "&date=" + date;
-        String response = restTemplate.getForObject(url, String.class);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> getApod(@RequestParam String date) {
+        try {
+            String url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey + "&date=" + date;
+            String response = restTemplate.getForObject(url, String.class);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            // Log the error (optional)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Failed to fetch APOD data.\"}");
+        }
     }
 }

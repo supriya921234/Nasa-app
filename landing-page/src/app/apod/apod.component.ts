@@ -142,6 +142,8 @@ export class ApodComponent {
       error: (err: Error) => {
         console.error('Error fetching APOD:', err);
         this.isLoading = false;
+        // Display a user-friendly error message
+        alert('Failed to fetch Astronomy Picture of the Day. Please try again later.');
       }
     });
   }
