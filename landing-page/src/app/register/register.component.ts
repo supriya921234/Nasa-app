@@ -45,6 +45,7 @@ import { AuthService } from '../auth.service';
         </div>
 
         <button type="submit" [disabled]="registerForm.invalid">Register</button>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       </form>
     </div>
   `,
@@ -58,7 +59,6 @@ import { AuthService } from '../auth.service';
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(5px);
     }
-    
     :host {
       display: block;
       min-height: 100vh;
@@ -90,10 +90,16 @@ import { AuthService } from '../auth.service';
       background: #ccc;
       cursor: not-allowed;
     }
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
   `
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -118,7 +124,10 @@ export class RegisterComponent {
       const { name, email, password } = this.registerForm.value;
       this.authService.register(name, email, password).subscribe({
         next: () => this.router.navigate(['/login']),
-        error: (err) => console.error('Registration failed', err)
+        error: (err) => {
+          this.errorMessage = typeof err === 'string' ? err : 'Registration failed. Please try again.';
+          console.error('Registration failed', err);
+        }
       });
     }
   }

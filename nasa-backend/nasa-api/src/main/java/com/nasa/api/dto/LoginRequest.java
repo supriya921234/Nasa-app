@@ -1,0 +1,6 @@
+package com.nasa.api.dto;
+
+public record LoginRequest(
+    String email,
+    String password
+) {}

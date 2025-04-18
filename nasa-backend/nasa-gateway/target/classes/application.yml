@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: nasa-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: nasa-api
+          uri: lb://nasa-api
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

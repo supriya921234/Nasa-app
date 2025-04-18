@@ -115,7 +115,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
-  isLoggedIn: boolean = false; // New property to track login status
+  isLoggedIn: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -133,12 +133,12 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: () => {
-          this.isLoggedIn = true; // Set login status to true on successful login
+          this.isLoggedIn = true;
           this.router.navigate(['/apod']);
         },
-        error: (err: Error) => {
-          this.errorMessage = 'Invalid credentials. Please try again.';
-          console.error('Login failed', err); // Fallback for debugging
+        error: (err: Error | string) => {
+          this.errorMessage = typeof err === 'string' ? err : 'Invalid credentials. Please try again.';
+          console.error('Login failed', err);
         }
       });
     }
